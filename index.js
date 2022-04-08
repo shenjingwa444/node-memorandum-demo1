@@ -13,7 +13,7 @@ module.exports.clear = async () => {
   await db.write([])
 }
 
-async function askForCreateTask(list) {
+function askForCreateTask(list) {
   inquirer
     .prompt({
       type: "input",
@@ -27,21 +27,21 @@ async function askForCreateTask(list) {
           done: false,
         }
       )
-      db.write(list)
+      db.write(list).then(()=>{console.log("标题输入完成")},()=>{console.log("标题输入失败")})
     })
 }
 
-async function markAsDone(list, index) {
+function markAsDone(list, index) {
   list[index].done = true
-  await db.write(list)
+  db.write(list).then(()=>{console.log("已完成")},()=>{console.log("标记失败")})
 }
 
-async function markAsUndone(list, index) {
+function markAsUndone(list, index) {
   list[index].done = false
-  await db.write(list)
+  db.write(list).then(()=>{console.log("未完成")},()=>{console.log("标记失败")})
 }
 
-async function updateTitle(list, index) {
+function updateTitle(list, index) {
   inquirer
     .prompt({
       type: "input",
@@ -51,13 +51,13 @@ async function updateTitle(list, index) {
     })
     .then((answer2) => {
       list[index].title = answer2.title
-      db.write(list)
+      db.write(list).then(()=>{console.log("更新标题成功")},()=>{console.log("更新标题失败")})
     })
 }
 
-async function remove(list, index) {
+function remove(list, index) {
   list.splice(index, 1)
-  await db.write(list)
+  db.write(list).then(()=>{console.log("删除成功")},()=>{console.log("删除失败")})
 }
 
 function askForAction(list, index) {
@@ -86,7 +86,7 @@ function askForAction(list, index) {
   })
 }
 
-async function printTasks(list) {
+function printTasks(list) {
   inquirer
     .prompt([
       {
@@ -113,9 +113,8 @@ async function printTasks(list) {
     })
 }
 
-
 module.exports.showAll = async () => {
   const list = await db.read()
-  await printTasks(list)
+  printTasks(list)
 }
 
