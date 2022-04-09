@@ -3,14 +3,21 @@
   "bin": {
     "t": "cli.js"
   },
-  "files":[
+  "files": [
     "*.js"
   ],
+  "scripts": {
+    "test": "jest"
+  },
   "version": "0.0.2",
   "main": "index.js",
   "license": "MIT",
   "dependencies": {
     "commander": "^3.0.2",
-    "inquirer": "^8.2.2"
+    "inquirer": "^8.2.2",
+    "node-memorandum-demo1": "0.0.2"
+  },
+  "devDependencies": {
+    "jest": "^27.5.1"
   }
 }
